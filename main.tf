@@ -33,13 +33,13 @@ resource "aws_ecs_service" "fargate_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = [aws_subnet.fargate_subnets[count.index].id]
-    security_groups = [aws_security_group.allow_web.id] # Replace with your security group ID
+    subnets         = [element(aws_subnet.fargate_subnets[*].id, count.index)]
+    security_groups = [aws_security_group.allow_web.id]
   }
 
   load_balancer {
     target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/example-target-group/abcdef1234567890"
-    container_name   = "fargate-example-container"
+    container_name   = "example-container"
     container_port   = 80
   }
 
