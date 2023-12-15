@@ -33,7 +33,7 @@ resource "aws_ecs_service" "fargate_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = [aws_subnet.fargate_subnets.id]   # Replace with your subnet IDs
+    subnets         = [aws_subnet.fargate_subnets[count.index].id]
     security_groups = [aws_security_group.allow_web.id] # Replace with your security group ID
   }
 
